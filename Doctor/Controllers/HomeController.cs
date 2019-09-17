@@ -8,23 +8,44 @@ namespace Doctor.Controllers
 {
     public class HomeController : Controller
     {
+        private DataContex _contex;
+
+        public HomeController()
+        {
+            _contex = new DataContex();
+        }
+
+        protected override void Dispose(bool dispossing)
+        {
+            _contex.Dispose();
+        }
         public ActionResult Index()
         {
             return View();
         }
-
-        public ActionResult About()
+        public ActionResult Chat()
         {
-            ViewBag.Message = "Your application description page.";
-
             return View();
         }
 
-        public ActionResult Contact()
+        public ActionResult Doctor()
         {
-            ViewBag.Message = "Your contact page.";
+            return this.View();
+        }
+        public JsonResult GetData()
+        {
+            var doctor = _contex.Doctorses.ToList();
+            return Json(doctor,JsonRequestBehavior.AllowGet);
+        }
 
-            return View();
+        public ActionResult About()
+        {
+            return this.View();
+        }
+
+        public ActionResult FAQ()
+        {
+            return this.View();
         }
     }
 }

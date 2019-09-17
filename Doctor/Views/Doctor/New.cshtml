@@ -1,0 +1,123 @@
+﻿@model Doctor.ViewModel.DoctorView
+
+@{
+    ViewBag.Title = "New";
+}
+
+@Html.Partial("_nav")
+<div class="row mb-xl-5">
+    
+    <div class="col-md-6 mx-auto d-block">
+        @if (ViewBag.Status != null && Convert.ToBoolean(ViewBag.Status))
+        {
+            if (ViewBag.Message != null)
+            {
+                <div class="alert alert-success">
+                    <p><strong>Success!  </strong>@ViewBag.Message</p>
+                </div>
+            }
+        }
+        else
+        {
+            <h3 class="text-center">Doctor registration </h3>
+            using (Html.BeginForm("New", "Doctor", FormMethod.Post, new { @encType = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-horizontal">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Doctors.doctorName)
+
+                        @Html.EditorFor(model => model.Doctors.doctorName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Doctors.doctorName, "", new { @class = "text-danger" })
+
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Doctors.doctorBirthDate)
+
+                        @Html.EditorFor(model => model.Doctors.doctorBirthDate, "{0:d mm yyyy}", new { htmlAttributes = new { @class = "form-control", type = "Date" } })
+                        @Html.ValidationMessageFor(model => model.Doctors.doctorBirthDate, "", new { @class = "text-danger" })
+
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Doctors.doctorEmail)
+
+                        @Html.EditorFor(model => model.Doctors.doctorEmail, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Doctors.doctorEmail, "", new { @class = "text-danger" })
+                        @Html.ValidationMessage("EmailExist")
+
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Doctors.doctorImagePath)
+
+                        @Html.TextBoxFor(model => model.Doctors.doctorImagefile, new { Type = "file", @class = "form-control-file" })
+                        @Html.ValidationMessageFor(model => model.Doctors.doctorImagefile, "", new { @class = "text-danger" })
+
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Doctors.doctorDetails)
+
+                        @Html.TextAreaFor(model => model.Doctors.doctorDetails, new { @class = "form-control", @placeholder = "Detail of specialties,Experience and Expertise" })
+                        @Html.ValidationMessageFor(model => model.Doctors.doctorDetails, "", new { @class = "text-danger" })
+
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Doctors.DepartmentId)<br />
+
+                        @Html.DropDownListFor(model => model.Doctors.DepartmentId, new SelectList(Model.Departments, "Id", "deptName"), "Select Department", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Doctors.DepartmentId, "", new { @class = "text-danger" })
+
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Doctors.doctorDegree)
+
+                        @Html.TextAreaFor(model => model.Doctors.doctorDegree, new { @class = "form-control", @placeholder = "Detail of degree,institute and other specification" })
+                        @Html.ValidationMessageFor(model => model.Doctors.doctorDegree, "", new { @class = "text-danger" })
+
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Doctors.doctorPassword)
+
+                        @Html.EditorFor(model => model.Doctors.doctorPassword, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Doctors.doctorPassword, "", new { @class = "text-danger" })
+
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Doctors.doctorConfirmPassword)
+
+                        @Html.EditorFor(model => model.Doctors.doctorConfirmPassword, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Doctors.doctorConfirmPassword, "", new { @class = "text-danger" })
+
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Doctors.regNo)
+
+                        @Html.EditorFor(model => model.Doctors.regNo, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Doctors.regNo, "", new { @class = "text-danger" })
+
+                    </div>
+                    <div class="form-group">
+                        @Html.HiddenFor(model => model.Doctors.Id)
+                        <input type="submit" value="Create" class="btn btn-outline-success my-2 my-sm-0 btn-block " />
+
+                    </div>
+                </div>
+            }
+        }
+        </div>
+    }
+
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
